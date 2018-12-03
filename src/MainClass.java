@@ -5,40 +5,48 @@ public class MainClass {
     public static void main(String[] args) {
         System.out.println("-----Задание№ 1----");
 
-        ArrayList<String> worlds= new ArrayList<>();
+        ArrayList<String> words= new ArrayList<>();
         for (int i =0 ; i < 10 ; i++){
-            worlds.add(i + " world");
+            words.add(i + " word");
         }
-        worlds.add(1,"0 world");
-        worlds.add(5,"4 world");
-        Set<String> set=new LinkedHashSet<>(worlds);
+        words.add(1,"0 word");
+        words.add(1,"0 word");
+        words.add(5,"4 word");
+        System.out.println(words);
+        Set<String> set = new HashSet<>(words); //создаем и печатаем набор уникальных значений из нашего ArrayList
         System.out.println(set);
-
+        //--------Количество повторений:
+        String o;
+        System.out.println("-----Задание№ 1.2 первый способ----");//можно через Map каждый раз когда встречается слово добавлять в строку, например +1
+        Map <String, String> books = new HashMap<>();
+        for (int i = 0; i < words.size(); i++){
+            o = words.get(i);
+            books.compute(o, (a, b) -> b + " 1+");
+        }
+        books.forEach((a,b) -> System.out.println(a +" встречается "+ b +" "));
+        System.out.println("-----Задание№ 1.2 второй способ----");//перебираем в цикле
+        int x;
+        for (int i = 0; i < words.size(); i++){
+            x = 1;
+            o = words.get(i);
+            //for (int j = 0; j < words.size(); j++){
+            for (int j = words.size() - 1; j > i ; j--){
+                if (o.equals(words.get(j))){
+                    words.remove(j);
+                    x++;
+                }
+            }
+            System.out.println("элемент " + o +" встречается " + x + " раз(а)");
+        }
         System.out.println("-----Задание№ 2----");
 
-        HashMap<String,String> MobList = new HashMap<>();
-        MobList.put("Иванов","123");
-        MobList.put("Петров","234");
-        MobList.put("Сидорова", "345");
-        MobList.getOrDefault("Кузьмина","222");
-        //System.out.println(MobList);
-        //System.out.println(MobList.getOrDefault("Liza","222"));
-        add(MobList,"Сидорова","1234");
-        get(MobList,"Сидорова");
-        get(MobList,"Трамп");
-        add(MobList,"Кузнецов","567");
-        get(MobList,"Кузнецов");
-    }
-    public static void add (HashMap phonelist,String key, String value){
-        if (phonelist.containsKey(key)){
-            value ="\n" + phonelist.get(key) + "\n" + value; //перенос строки для того чтобы в консоли читалось лучше
-            //phonelist.put(key,value);
-            phonelist.replace(key,value);
-        } phonelist.put(key,value);
-    }
-    public static void get (HashMap phonelist,String key) {
-        System.out.println("По фамилии " + key + " найдены следующие номера телефонов : "
-                + phonelist.getOrDefault(key,"Отсутсвует в справочнике"));
+        PhoneBook book = new PhoneBook();
+        book.add("Сидорова","1234");
+        book.add("Сидорова","234");
+        book.add("Иванов","123");
+        book.add("Кузнецов","567");
+        book.get("Сидорова");
+        book.get("Иванов");
     }
 }
 
