@@ -18,10 +18,11 @@ public class MainClass {
         //--------Количество повторений:
         String o;
         System.out.println("-----Задание№ 1.2 первый способ----");//можно через Map каждый раз когда встречается слово добавлять в строку, например +1
-        Map <String, String> books = new HashMap<>();
+        Map <String, Integer> books = new HashMap<>();
         for (int i = 0; i < words.size(); i++){
             o = words.get(i);
-            books.compute(o, (a, b) -> b + " 1+");
+            //books.compute(o, (a, b) -> b + " 1+");
+            books.compute(o, (a, b) -> b == null ? 1 : ++b);
         }
         books.forEach((a,b) -> System.out.println(a +" встречается "+ b +" "));
         System.out.println("-----Задание№ 1.2 второй способ----");//перебираем в цикле
